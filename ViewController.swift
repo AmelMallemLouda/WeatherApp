@@ -19,11 +19,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        GetDataFromIPAHandler()
-//        APIHandler.shared.delegate = self
-//        APIHandler.shared.GetDataFromIPAHandler()
-        
-        
+        // Mark : Call my get data method
+        GetDataFromIPA()
        // Mark : register cell
         tblView.register(UINib(nibName: "WeatherTableViewCell", bundle: nil), forCellReuseIdentifier: "WeatherTableViewCell")
       
@@ -38,14 +35,14 @@ class ViewController: UIViewController {
   // Mark: Refresh the weather data by calling the API again
     @objc private func refreshWeatherData() {
 
-        GetDataFromIPAHandler()
+        GetDataFromIPA()
         self.refreshControl.endRefreshing()
     }
     
     
     
     
-    func GetDataFromIPAHandler(){
+    func GetDataFromIPA(){
         let strURL = "https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&appid=0bdf513bdc9ef9d4213de34f46610fc0"
         guard let url = URL.init(string: strURL) else {return}
         
@@ -93,25 +90,5 @@ extension ViewController :  UITableViewDelegate , UITableViewDataSource {
         cell.configure(with: models[indexPath.row])
         return cell 
     }
-    
-   
-    // Mark : APIHandlerProtocol requirement
-// func GetData(data: Data?, response: URLResponse?, error: Error?) {
-//        self.error = error
-//        if let data = data  , error == nil {
-//            do {
-//
-//                let result = try JSONDecoder.init().decode(WeatherResponse.self, from: data)
-//                let entries = result.daily
-//              self.models.append(contentsOf: entries)
-//                DispatchQueue.main.async {
-//                    self.tblView.reloadData()
-//                    self.refreshControl.endRefreshing()
-//                }
-//
-//            }catch{
-//                print(error)
-//            }
-//        }
-//    }
+
 }
